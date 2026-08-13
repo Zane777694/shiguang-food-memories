@@ -25,10 +25,18 @@ jobs:
       # The legacy lockfiles in this project contain invalid bytes. Install from
       # package.json without reading or rewriting either lockfile.
       - run: npm install --no-package-lock --legacy-peer-deps
+      - name: Prepare APK download
+        shell: bash
+        run: |
+          mkdir -p public/downloads
+          curl --fail --location --retry 3 \
+            https://shiguang-food-memories.zane777694.chatgpt.site/downloads/shiguang.part1 \
+            --output public/downloads/shiguang.part1
+          curl --fail --location --retry 3 \
+            https://shiguang-food-memories.zane777694.chatgpt.site/downloads/shiguang.part2 \
+            --output public/downloads/shiguang.part2
       - run: npm run build:pages
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: github-pages-dist
