@@ -22,9 +22,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run build:pages
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build:pages
       - uses: actions/configure-pages@v5
         with:
           enablement: true
