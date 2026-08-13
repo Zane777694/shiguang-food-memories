@@ -22,9 +22,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: corepack enable
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run build:pages
+      # The legacy lockfiles in this project contain invalid bytes. Install from
+      # package.json without reading or rewriting either lockfile.
+      - run: npm install --no-package-lock --legacy-peer-deps
+      - run: npm run build:pages
       - uses: actions/configure-pages@v5
         with:
           enablement: true
